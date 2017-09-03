@@ -1,19 +1,25 @@
+package markets
+
 import okhttp3.HttpUrl
+import retrofit.RetrofitFinMarketApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
+import TickerResponse
+import tickers.LunoTicker
+import tickers.CryptoTicker
 
 /**
  * Created by johannesC on 2017/09/03.
  */
-class CryptoWatchRepository : CryptoRepository {
+class LunoRepository : FinMarketRepository {
 
-    private val requestUrl = HttpUrl.parse("https://api.cryptowat.ch/")
+    private val requestUrl = HttpUrl.parse("https://api.mybitx.com/")
 
     override fun getTicker(): TickerResponse {
         val retrofit = Retrofit.Builder().baseUrl(requestUrl).addConverterFactory(GsonConverterFactory.create()).build()
-        val btcApi = retrofit.create(retrofit.RetrofitBitcoinApi::class.java)
-        val call = btcApi.getCryptoWatchTicker()
+        val btcApi = retrofit.create(RetrofitFinMarketApi::class.java)
+        val call = btcApi.getLunoTicker()
         var tickerResponse: TickerResponse?
 
         try {
@@ -31,18 +37,11 @@ class CryptoWatchRepository : CryptoRepository {
         if (tickerResponse == null) {
             tickerResponse = TickerResponse.onFailure(Throwable("Failure"))
         }
+
         return tickerResponse
     }
 
-    private fun extractTickers(result: Result?): ArrayList<Ticker> {
-        val tickers: ArrayList<Ticker> = arrayListOf()
-
-        result?.result?.entries?.forEach {
-            if (it.key.contains("btc") && (it.key.contains("usd") || it.key.contains("eur"))) {
-                val pairSplit = it.key.split(":")
-                tickers.add(Ticker(Calendar.getInstance().time.toString(), it.value.price.last.toString(), pairSplit[1], pairSplit[0]))
-            }
-        }
-        return tickers
+    private fun extractTickers(result: LunoTicker?): ArrayList<CryptoTicker> {
+        return arrayListOf(CryptoTicker(result?.ask, "btczar", "luno ZA"))
     }
 }

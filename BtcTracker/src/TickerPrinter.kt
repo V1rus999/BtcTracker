@@ -1,7 +1,11 @@
+import tickers.OutputCryptoTicker
+
 /**
  * Created by johannesC on 2017/09/03.
  */
 interface TickerPrinter {
 
-    fun print(tickers: ArrayList<Ticker>)
+    fun print(tickers: OutputCryptoTicker)
+
+    fun createCsvFile(fileName : String)
 }

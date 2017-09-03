@@ -3,7 +3,7 @@
  */
 sealed class TickerResponse {
 
-    data class onSuccess(val ticker: List<Ticker>? = null) : TickerResponse()
+    data class onSuccess<out T>(val response: T? = null) : TickerResponse()
 
     data class onFailure(val throwable: Throwable? = null) : TickerResponse()
 

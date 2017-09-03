@@ -1,3 +1,5 @@
+package tickers
+
 /**
  * Created by johannesC on 2017/09/03.
  */
