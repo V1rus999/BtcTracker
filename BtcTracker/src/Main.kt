@@ -5,6 +5,6 @@ import retrofit.TickerService
  */
 fun main(args: Array<String>) {
     println("Starting ticker service")
-    val service = TickerService(LunoRepository(), CryptoWatchRepository())
+    val service = TickerService(LunoRepository(), CryptoWatchRepository(), CsvFilePrinter())
     service.startDownloadingTickerData()
 }

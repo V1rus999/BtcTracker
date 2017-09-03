@@ -6,11 +6,14 @@ import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 import Ticker
+import TickerPrinter
 
 /**
  * Created by johannesC on 2017/09/03.
  */
-class TickerService constructor(private val lunoRepository: CryptoRepository, private val cryptoWatchRepository: CryptoRepository) {
+class TickerService constructor(private val lunoRepository: CryptoRepository,
+                                private val cryptoWatchRepository: CryptoRepository,
+                                private val writer: TickerPrinter) {
 
     private var scheduler: ScheduledExecutorService? = null
 
@@ -28,8 +31,9 @@ class TickerService constructor(private val lunoRepository: CryptoRepository, pr
                 is TickerResponse.onSuccess -> cryWResponse.ticker?.let { tickers.addAll(cryWResponse.ticker) }
             }
 
+            writer.print(tickers)
             println(tickers)
-        }, 0, 11, TimeUnit.SECONDS)
+        }, 0, 15, TimeUnit.SECONDS)
     }
 
     fun stopDownloadingTickerData() {
