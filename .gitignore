@@ -65,3 +65,4 @@ build
 *.ipr
 *~
 *.swp
+*.csv
