@@ -16,13 +16,13 @@ class CsvFilePrinter : TickerPrinter {
                 val stringBuilder = StringBuilder()
 
                 tickers.cryptoTickers.forEach {
-                    stringBuilder.append(tickers.timeStamp).append(";")
-                    stringBuilder.append(it.exchange).append(";")
-                    stringBuilder.append(it.pair).append(";")
-                    stringBuilder.append(it.price).append(";")
-                    stringBuilder.append(it.usdPrice).append(";")
-                    stringBuilder.append(tickers.zar).append(";")
-                    stringBuilder.append(tickers.eur).append(";\n")
+                    stringBuilder.append(tickers.timeStamp).append(",")
+                    stringBuilder.append(it.exchange).append(",")
+                    stringBuilder.append(it.pair).append(",")
+                    stringBuilder.append(it.price).append(",")
+                    stringBuilder.append(it.usdPrice).append(",")
+                    stringBuilder.append(tickers.zar).append(",")
+                    stringBuilder.append(tickers.eur).append(",\n")
                 }
                 writer.write(stringBuilder.toString())
             }
