@@ -7,8 +7,8 @@ Fiat information is also added to every ticker in the CSV file. The idea is to r
 
 # Exchanges used for now
 
-Cryptowatch
-Luno (For ZAR)
+* Cryptowatch
+* Luno (For ZAR)
 
 # Usage
 
