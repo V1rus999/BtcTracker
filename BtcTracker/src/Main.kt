@@ -9,11 +9,14 @@ import java.io.InputStreamReader
  * Created by johannesC on 2017/09/03.
  */
 fun main(args: Array<String>) {
-    println("Starting response service")
+    println("Starting...")
     val csvPrinter = CsvFilePrinter()
     val time = System.currentTimeMillis()
-    csvPrinter.createCsvFile("${time}_TickerData.csv")
+    val filename = "${time}_TickerData.csv"
+    println("Created file : $filename")
+    csvPrinter.createCsvFile(filename)
     val service = TickerStreamingService(FixerExchange(), csvPrinter, CryptoWatchExchange(), LunoExchange())
+    println("Starting streaming service")
     service.startDownloadingTickerData()
 
     println("Press 1 to quit")

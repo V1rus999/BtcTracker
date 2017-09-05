@@ -27,6 +27,7 @@ class TickerStreamingService constructor(private val fiatRepository: FiatExchang
 
             writeToFile(tickers, fiatRates)
             println(tickers)
+            println("Press 1 to quit")
         }, 0, 15, TimeUnit.MINUTES)
     }
 
