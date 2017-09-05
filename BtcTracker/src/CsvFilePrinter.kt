@@ -37,7 +37,7 @@ class CsvFilePrinter : TickerPrinter {
         try {
             BufferedWriter(OutputStreamWriter(FileOutputStream(this.fileName, true), StandardCharsets.UTF_8)).use {
                 writer ->
-                writer.write("TimeStamp;Exchange;CurrencyPair;Price;Dollar Price;UsdZar;UsdEur\n")
+                writer.write("TimeStamp,Exchange,CurrencyPair,Price,Dollar Price,UsdZar,UsdEur\n")
             }
         } catch (ex: IOException) {
             // Handle me
