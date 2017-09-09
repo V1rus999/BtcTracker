@@ -1,6 +1,7 @@
 package markets
 
 import markets.crypto_exchanges.CryptoExchange
+import markets.crypto_exchanges.bittrex.BittrexExchange
 import markets.crypto_exchanges.cryptowatch.CryptoWatchExchange
 import markets.crypto_exchanges.luno.LunoExchange
 
@@ -9,10 +10,11 @@ import markets.crypto_exchanges.luno.LunoExchange
  */
 class ExchangeFactory {
 
-    fun getExchanges():ArrayList<CryptoExchange> {
+    fun getExchanges(): ArrayList<CryptoExchange> {
         return arrayListOf(
                 CryptoWatchExchange(),
-                LunoExchange()
+                LunoExchange(),
+                BittrexExchange()
         )
     }
 }

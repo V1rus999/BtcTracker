@@ -1,6 +1,7 @@
 package retrofit
 
 import markets.Ticker
+import markets.crypto_exchanges.bittrex.BittrexTicker
 import retrofit2.http.GET
 import markets.crypto_exchanges.luno.LunoTicker
 import retrofit2.Call
@@ -19,5 +20,8 @@ interface RetrofitFinMarketApi {
 
     @GET("latest?base=USD")
     fun getFiatTicker(): Call<Ticker.FiatTicker>
+
+    @GET("api/v1.1/public/getmarketsummaries")
+    fun getBittrexTicker(): Call<BittrexTicker.BittrexResult>
 
 }

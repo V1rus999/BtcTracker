@@ -23,7 +23,9 @@ class TickerStreamingService(private val writer: TickerPrinter,
 
             val tickers = arrayListOf<Ticker.CryptoTicker>()
             for (exchange in cryptoExchanges) {
+                println("Checking ${exchange.exchangeName()}")
                 tickers.addAll(exchange.getTicker(fiatRates))
+                println("Done")
             }
 
             writeToFile(tickers)

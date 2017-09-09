@@ -17,6 +17,8 @@ class CryptoWatchExchange : CryptoExchange {
     private val retrofit = Retrofit.Builder().baseUrl(requestUrl).addConverterFactory(GsonConverterFactory.create()).build()
     private val btcApi = retrofit.create(retrofit.RetrofitFinMarketApi::class.java)
 
+    override fun exchangeName(): String = "CryptoWatch"
+
     override fun getTicker(rates: ArrayList<Ticker.Rates>): ArrayList<Ticker.CryptoTicker> {
         val call = btcApi.getCryptoWatchTicker()
         var tickers: ArrayList<Ticker.CryptoTicker>? = arrayListOf()

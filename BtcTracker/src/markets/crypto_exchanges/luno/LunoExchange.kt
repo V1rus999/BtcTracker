@@ -17,6 +17,8 @@ class LunoExchange : CryptoExchange {
     private val retrofit = Retrofit.Builder().baseUrl(requestUrl).addConverterFactory(GsonConverterFactory.create()).build()
     private val btcApi = retrofit.create(RetrofitFinMarketApi::class.java)
 
+    override fun exchangeName(): String = "Luno"
+
     override fun getTicker(rates: ArrayList<Ticker.Rates>): ArrayList<Ticker.CryptoTicker> {
         val call = btcApi.getLunoTicker()
         var tickers: ArrayList<Ticker.CryptoTicker>? = arrayListOf()

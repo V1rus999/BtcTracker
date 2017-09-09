@@ -7,6 +7,8 @@ import markets.Ticker
  */
 interface CryptoExchange {
 
+    fun exchangeName() : String
+
     fun getTicker(rates: ArrayList<Ticker.Rates>) : ArrayList<Ticker.CryptoTicker>
 
 }
