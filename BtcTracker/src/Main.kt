@@ -1,5 +1,3 @@
-import markets.crypto_exchanges.CryptoWatchExchange
-import markets.crypto_exchanges.LunoExchange
 import markets.fiat_exchanges.FixerExchange
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -19,7 +17,8 @@ fun main(args: Array<String>) {
     val filename = "${time}_TickerData.csv"
     csvPrinter.createCsvFile(filename)
 
-    val service = TickerStreamingService(csvPrinter, FixerExchange(), CryptoWatchExchange(), LunoExchange())
+    val exchangeFactory = ExchangeFactory()
+    val service = TickerStreamingService(csvPrinter, FixerExchange(), exchangeFactory.getExchanges())
     println("Starting streaming service")
     service.startDownloadingTickerData()
 
@@ -31,3 +30,4 @@ fun main(args: Array<String>) {
         println("Quitting...")
     }
 }
+

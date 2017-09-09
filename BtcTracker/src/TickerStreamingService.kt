@@ -9,9 +9,9 @@ import tickers.*
 /**
  * Created by johannesC on 2017/09/03.
  */
-class TickerStreamingService constructor(private val writer: TickerPrinter,
-                                         private val fiatRepository: FiatExchange,
-                                         vararg val cryptoExchanges: CryptoExchange) {
+class TickerStreamingService(private val writer: TickerPrinter,
+                             private val fiatRepository: FiatExchange,
+                             private val cryptoExchanges: ArrayList<CryptoExchange>) {
 
     private var scheduler: ScheduledExecutorService? = null
 
