@@ -1,10 +1,10 @@
 package retrofit
 
+import markets.Ticker
 import retrofit2.http.GET
 import markets.crypto_exchanges.luno.LunoTicker
 import retrofit2.Call
 import markets.crypto_exchanges.cryptowatch.CryptoWatchTicker
-import markets.FiatTicker
 
 /**
  * Created by johannesC on 2017/09/03.
@@ -18,6 +18,6 @@ interface RetrofitFinMarketApi {
     fun getCryptoWatchTicker(): Call<CryptoWatchTicker.CryptoWatchResult>
 
     @GET("latest?base=USD")
-    fun getFiatTicker(): Call<FiatTicker>
+    fun getFiatTicker(): Call<Ticker.FiatTicker>
 
 }

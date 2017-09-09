@@ -1,5 +1,4 @@
-import markets.CryptoTicker
-import markets.OutputCryptoTicker
+import markets.Ticker
 import markets.crypto_exchanges.CryptoExchange
 import markets.fiat_exchanges.FiatExchange
 import printer.TickerPrinter
@@ -22,7 +21,7 @@ class TickerStreamingService(private val writer: TickerPrinter,
 
             val fiatRates = fiatRepository.getRates()
 
-            val tickers = arrayListOf<CryptoTicker>()
+            val tickers = arrayListOf<Ticker.CryptoTicker>()
             for (exchange in cryptoExchanges) {
                 tickers.addAll(exchange.getTicker(fiatRates))
             }
@@ -33,9 +32,9 @@ class TickerStreamingService(private val writer: TickerPrinter,
         }, 0, 15, TimeUnit.MINUTES)
     }
 
-    private fun writeToFile(tickers: ArrayList<CryptoTicker>) {
+    private fun writeToFile(tickers: ArrayList<Ticker.CryptoTicker>) {
         try {
-            writer.print(OutputCryptoTicker(cryptoTickers = tickers))
+            writer.print(Ticker.OutputCryptoTicker(cryptoTickers = tickers))
         } catch (e: Exception) {
             println(e.toString())
         }

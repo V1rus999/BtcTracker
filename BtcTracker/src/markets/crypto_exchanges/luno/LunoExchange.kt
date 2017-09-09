@@ -1,12 +1,11 @@
 package markets.crypto_exchanges.luno
 
+import markets.Ticker
 import markets.crypto_exchanges.CryptoExchange
 import okhttp3.HttpUrl
 import retrofit.RetrofitFinMarketApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import markets.CryptoTicker
-import markets.Rates
 import kotlin.collections.ArrayList
 
 /**
@@ -18,9 +17,9 @@ class LunoExchange : CryptoExchange {
     private val retrofit = Retrofit.Builder().baseUrl(requestUrl).addConverterFactory(GsonConverterFactory.create()).build()
     private val btcApi = retrofit.create(RetrofitFinMarketApi::class.java)
 
-    override fun getTicker(rates: ArrayList<Rates>): ArrayList<CryptoTicker> {
+    override fun getTicker(rates: ArrayList<Ticker.Rates>): ArrayList<Ticker.CryptoTicker> {
         val call = btcApi.getLunoTicker()
-        var tickers: ArrayList<CryptoTicker>? = arrayListOf()
+        var tickers: ArrayList<Ticker.CryptoTicker>? = arrayListOf()
 
         try {
             val response = call.execute()
@@ -40,11 +39,11 @@ class LunoExchange : CryptoExchange {
         return tickers
     }
 
-    private fun extractTickers(result: LunoTicker?): ArrayList<CryptoTicker> {
-        return arrayListOf(CryptoTicker(result?.ask, "btczar", "luno za"))
+    private fun extractTickers(result: LunoTicker?): ArrayList<Ticker.CryptoTicker> {
+        return arrayListOf(Ticker.CryptoTicker(result?.ask, "btczar", "luno za"))
     }
 
-    private fun addUsdPrices(tickers: ArrayList<CryptoTicker>, rates: ArrayList<Rates>): ArrayList<CryptoTicker> {
+    private fun addUsdPrices(tickers: ArrayList<Ticker.CryptoTicker>, rates: ArrayList<Ticker.Rates>): ArrayList<Ticker.CryptoTicker> {
         val currencyUsdRate = rates.find { it.name.contains("ZAR") }
 
         currencyUsdRate?.let {

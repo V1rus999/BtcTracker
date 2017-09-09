@@ -3,7 +3,7 @@ package markets.fiat_exchanges
 import okhttp3.HttpUrl
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import markets.Rates
+import markets.Ticker.Rates
 
 /**
  * Created by johannesC on 2017/09/03.

@@ -3,6 +3,7 @@ package printer
 /**
  * Created by johannesC on 2017/09/03.
  */
+import markets.Ticker
 import java.io.*
 import java.nio.charset.StandardCharsets
 import java.text.DecimalFormat
@@ -11,7 +12,7 @@ import java.text.DecimalFormat
 class CsvFilePrinter : TickerPrinter {
     var fileName: String = "data/TickerData.csv"
 
-    override fun print(tickers: OutputCryptoTicker) {
+    override fun print(tickers: Ticker.OutputCryptoTicker) {
         try {
             BufferedWriter(OutputStreamWriter(FileOutputStream(fileName, true), StandardCharsets.UTF_8)).use {
                 writer ->
