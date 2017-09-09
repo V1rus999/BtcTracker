@@ -1,7 +1,7 @@
 package markets.crypto_exchanges
 
-import tickers.CryptoTicker
-import tickers.Rates
+import markets.CryptoTicker
+import markets.Rates
 
 /**
  * Created by johannesC on 2017/09/03.

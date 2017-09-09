@@ -1,12 +1,12 @@
-package markets.crypto_exchanges
+package markets.crypto_exchanges.luno
 
+import markets.crypto_exchanges.CryptoExchange
 import okhttp3.HttpUrl
 import retrofit.RetrofitFinMarketApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import tickers.LunoTicker
-import tickers.CryptoTicker
-import tickers.Rates
+import markets.CryptoTicker
+import markets.Rates
 import kotlin.collections.ArrayList
 
 /**

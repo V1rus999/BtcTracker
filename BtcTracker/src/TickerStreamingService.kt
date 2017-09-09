@@ -1,10 +1,11 @@
+import markets.CryptoTicker
+import markets.OutputCryptoTicker
 import markets.crypto_exchanges.CryptoExchange
 import markets.fiat_exchanges.FiatExchange
-import tickers.CryptoTicker
+import printer.TickerPrinter
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
-import tickers.*
 
 /**
  * Created by johannesC on 2017/09/03.

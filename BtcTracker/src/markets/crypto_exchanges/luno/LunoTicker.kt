@@ -1,4 +1,4 @@
-package tickers
+package markets.crypto_exchanges.luno
 
 /**
  * Created by johannesC on 2017/09/03.

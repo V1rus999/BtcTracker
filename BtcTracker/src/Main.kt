@@ -1,4 +1,6 @@
+import markets.ExchangeFactory
 import markets.fiat_exchanges.FixerExchange
+import printer.CsvFilePrinter
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.*

@@ -1,6 +1,6 @@
 package markets.fiat_exchanges
 
-import tickers.Rates
+import markets.Rates
 
 /**
  * Created by johannesC on 2017/09/05.

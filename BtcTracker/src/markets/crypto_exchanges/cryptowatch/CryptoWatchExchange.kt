@@ -1,11 +1,12 @@
-package markets.crypto_exchanges
+package markets.crypto_exchanges.cryptowatch
 
+import markets.crypto_exchanges.CryptoExchange
 import okhttp3.HttpUrl
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import tickers.CryptoTicker
-import tickers.Rates
-import tickers.Result
+import markets.CryptoTicker
+import markets.Rates
+import markets.crypto_exchanges.cryptowatch.CryptoWatchTicker.CryptoWatchResult
 import kotlin.collections.ArrayList
 
 /**
@@ -56,7 +57,7 @@ class CryptoWatchExchange : CryptoExchange {
         return tickers
     }
 
-    private fun extractTickers(result: Result?): ArrayList<CryptoTicker> {
+    private fun extractTickers(result: CryptoWatchResult?): ArrayList<CryptoTicker> {
         val cryptoTickers: ArrayList<CryptoTicker> = arrayListOf()
 
         result?.result?.entries?.forEach {

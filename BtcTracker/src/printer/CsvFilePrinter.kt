@@ -1,7 +1,8 @@
+package printer
+
 /**
  * Created by johannesC on 2017/09/03.
  */
-import tickers.OutputCryptoTicker
 import java.io.*
 import java.nio.charset.StandardCharsets
 import java.text.DecimalFormat

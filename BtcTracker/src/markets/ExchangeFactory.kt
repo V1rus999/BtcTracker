@@ -1,6 +1,8 @@
+package markets
+
 import markets.crypto_exchanges.CryptoExchange
-import markets.crypto_exchanges.CryptoWatchExchange
-import markets.crypto_exchanges.LunoExchange
+import markets.crypto_exchanges.cryptowatch.CryptoWatchExchange
+import markets.crypto_exchanges.luno.LunoExchange
 
 /**
  * Created by johannesC on 2017/09/09.
