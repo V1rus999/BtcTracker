@@ -29,7 +29,7 @@ class TickerStreamingService constructor(private val writer: TickerPrinter,
             writeToFile(tickers)
             println(tickers)
             println("Press 1 to quit")
-        }, 0, 15, TimeUnit.SECONDS)
+        }, 0, 15, TimeUnit.MINUTES)
     }
 
     private fun writeToFile(tickers: ArrayList<CryptoTicker>) {
