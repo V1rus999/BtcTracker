@@ -9,8 +9,9 @@ import tickers.*
 /**
  * Created by johannesC on 2017/09/03.
  */
-class TickerStreamingService constructor(private val fiatRepository: FiatExchange,
-                                         private val writer: TickerPrinter, vararg val cryptoExchanges: CryptoExchange) {
+class TickerStreamingService constructor(private val writer: TickerPrinter,
+                                         private val fiatRepository: FiatExchange,
+                                         vararg val cryptoExchanges: CryptoExchange) {
 
     private var scheduler: ScheduledExecutorService? = null
 
@@ -25,20 +26,17 @@ class TickerStreamingService constructor(private val fiatRepository: FiatExchang
                 tickers.addAll(exchange.getTicker(fiatRates))
             }
 
-            writeToFile(tickers, fiatRates)
+            writeToFile(tickers)
             println(tickers)
             println("Press 1 to quit")
-        }, 0, 15, TimeUnit.MINUTES)
+        }, 0, 15, TimeUnit.SECONDS)
     }
 
-    private fun writeToFile(tickers: ArrayList<CryptoTicker>, fiatRates: Rates?) {
+    private fun writeToFile(tickers: ArrayList<CryptoTicker>) {
         try {
-            if (fiatRates != null) {
-                writer.print(OutputCryptoTicker(cryptoTickers = tickers, zar = fiatRates.ZAR!!, eur = fiatRates.EUR!!))
-            } else {
-                writer.print(OutputCryptoTicker(cryptoTickers = tickers))
-            }
+            writer.print(OutputCryptoTicker(cryptoTickers = tickers))
         } catch (e: Exception) {
+            println(e.toString())
         }
     }
 

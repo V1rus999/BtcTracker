@@ -3,10 +3,10 @@ package markets.crypto_exchanges
 import okhttp3.HttpUrl
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 import tickers.CryptoTicker
 import tickers.Rates
 import tickers.Result
+import kotlin.collections.ArrayList
 
 /**
  * Created by johannesC on 2017/09/03.
@@ -17,7 +17,7 @@ class CryptoWatchExchange : CryptoExchange {
     private val retrofit = Retrofit.Builder().baseUrl(requestUrl).addConverterFactory(GsonConverterFactory.create()).build()
     private val btcApi = retrofit.create(retrofit.RetrofitFinMarketApi::class.java)
 
-    override fun getTicker(rates: Rates?): ArrayList<CryptoTicker> {
+    override fun getTicker(rates: ArrayList<Rates>): ArrayList<CryptoTicker> {
         val call = btcApi.getCryptoWatchTicker()
         var tickers: ArrayList<CryptoTicker>? = arrayListOf()
 
@@ -28,30 +28,29 @@ class CryptoWatchExchange : CryptoExchange {
             }
 
         } catch (e: Exception) {
+            println(e.toString())
         }
 
         if (tickers == null) {
             tickers = arrayListOf()
         }
 
-        rates?.let { addUsdPrices(tickers!!, rates) }
+        rates.let { addUsdPrices(tickers!!, rates) }
         return tickers
     }
 
-    fun addUsdPrices(tickers: ArrayList<CryptoTicker>, rates: Rates): ArrayList<CryptoTicker> {
+    private fun addUsdPrices(tickers: ArrayList<CryptoTicker>, rates: ArrayList<Rates>): ArrayList<CryptoTicker> {
         tickers.forEach {
+            val ticker = it
             try {
-                val price: Double? = it.price?.toDouble()
+                val currencyUsdRate = rates.find { ticker.pair.toUpperCase().contains(it.name.toUpperCase()) }
+                val price: Double? = it.price
 
-                val rate: Double? =
-                        if (it.pair.contains("eur")) rates.EUR?.toDouble()
-                        else if (it.pair.contains("zar")) rates.ZAR?.toDouble()
-                        else null
-
-                if (price != null && rate != null) {
-                    it.usdPrice = (price / rate).toString()
+                if (price != null && currencyUsdRate != null) {
+                    it.usdPrice = (price / currencyUsdRate.value)
                 }
             } catch (e: Exception) {
+                print("${this.javaClass.name} : $e")
             }
         }
         return tickers
@@ -61,9 +60,9 @@ class CryptoWatchExchange : CryptoExchange {
         val cryptoTickers: ArrayList<CryptoTicker> = arrayListOf()
 
         result?.result?.entries?.forEach {
-            if (it.key.contains("btc") && (it.key.contains("usd") || it.key.contains("eur"))) {
+            if (it.value.price.last != null && it.value.price.last!! > 0) {
                 val pairSplit = it.key.split(":")
-                cryptoTickers.add(CryptoTicker(it.value.price.last.toString(), pairSplit[1], pairSplit[0]))
+                cryptoTickers.add(CryptoTicker(it.value.price.last, pairSplit[1], pairSplit[0]))
             }
         }
         return cryptoTickers

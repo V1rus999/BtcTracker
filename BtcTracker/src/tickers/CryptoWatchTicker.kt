@@ -9,6 +9,6 @@ data class Result(
 data class PriceHolder(val price: Price)
 
 data class Price(
-        var last: Float? = null,
-        var high: Float? = null,
-        var low: Float? = null)
+        var last: Double? = null,
+        var high: Double? = null,
+        var low: Double? = null)

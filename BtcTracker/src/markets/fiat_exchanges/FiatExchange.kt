@@ -7,5 +7,5 @@ import tickers.Rates
  */
 interface FiatExchange {
 
-    fun getRates() : Rates?
+    fun getRates() : ArrayList<Rates>
 }

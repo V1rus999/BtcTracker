@@ -4,10 +4,10 @@ import okhttp3.HttpUrl
 import retrofit.RetrofitFinMarketApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 import tickers.LunoTicker
 import tickers.CryptoTicker
 import tickers.Rates
+import kotlin.collections.ArrayList
 
 /**
  * Created by johannesC on 2017/09/03.
@@ -18,7 +18,7 @@ class LunoExchange : CryptoExchange {
     private val retrofit = Retrofit.Builder().baseUrl(requestUrl).addConverterFactory(GsonConverterFactory.create()).build()
     private val btcApi = retrofit.create(RetrofitFinMarketApi::class.java)
 
-    override fun getTicker(rates: Rates?): ArrayList<CryptoTicker> {
+    override fun getTicker(rates: ArrayList<Rates>): ArrayList<CryptoTicker> {
         val call = btcApi.getLunoTicker()
         var tickers: ArrayList<CryptoTicker>? = arrayListOf()
 
@@ -29,34 +29,35 @@ class LunoExchange : CryptoExchange {
             }
 
         } catch (e: Exception) {
+            println(e.toString())
         }
 
         if (tickers == null) {
             tickers = arrayListOf()
         }
 
-        rates?.let { addUsdPrices(tickers!!, rates) }
+        rates.let { addUsdPrices(tickers!!, rates) }
         return tickers
     }
 
     private fun extractTickers(result: LunoTicker?): ArrayList<CryptoTicker> {
-        return arrayListOf(CryptoTicker(result?.ask, "btczar", "luno ZA"))
+        return arrayListOf(CryptoTicker(result?.ask, "btczar", "luno za"))
     }
 
-    fun addUsdPrices(tickers: ArrayList<CryptoTicker>, rates: Rates): ArrayList<CryptoTicker> {
-        tickers.forEach {
-            try {
-                val price: Double? = it.price?.toDouble()
+    private fun addUsdPrices(tickers: ArrayList<CryptoTicker>, rates: ArrayList<Rates>): ArrayList<CryptoTicker> {
+        val currencyUsdRate = rates.find { it.name.contains("ZAR") }
 
-                val rate: Double? =
-                        if (it.pair.contains("eur")) rates.EUR?.toDouble()
-                        else if (it.pair.contains("zar")) rates.ZAR?.toDouble()
-                        else null
+        currencyUsdRate?.let {
+            tickers.forEach {
+                try {
+                    val price: Double? = it.price?.toDouble()
 
-                if (price != null && rate != null) {
-                    it.usdPrice = (price / rate).toString()
+                    if (price != null) {
+                        it.usdPrice = (price / currencyUsdRate.value)
+                    }
+                } catch (e: Exception) {
+                    print("${this.javaClass.name} : $e")
                 }
-            } catch (e: Exception) {
             }
         }
         return tickers

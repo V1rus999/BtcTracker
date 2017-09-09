@@ -6,7 +6,7 @@ package tickers
 data class LunoTicker(
         var timestamp: Long? = null,
         var bid: String? = null,
-        var ask: String? = null,
+        var ask: Double? = null,
         var lastTrade: String? = null,
         var rolling24HourVolume: String? = null,
         var pair: String? = null)

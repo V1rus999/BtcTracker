@@ -4,6 +4,7 @@
 import tickers.OutputCryptoTicker
 import java.io.*
 import java.nio.charset.StandardCharsets
+import java.text.DecimalFormat
 
 
 class CsvFilePrinter : TickerPrinter {
@@ -19,10 +20,12 @@ class CsvFilePrinter : TickerPrinter {
                     stringBuilder.append(tickers.timeStamp).append(",")
                     stringBuilder.append(it.exchange).append(",")
                     stringBuilder.append(it.pair).append(",")
-                    stringBuilder.append(it.price).append(",")
-                    stringBuilder.append(it.usdPrice).append(",")
-                    stringBuilder.append(tickers.zar).append(",")
-                    stringBuilder.append(tickers.eur).append(",\n")
+
+                    val df = DecimalFormat("#")
+                    df.maximumFractionDigits = 10
+
+                    stringBuilder.append(df.format(it.price)).append(",")
+                    stringBuilder.append(df.format(it.usdPrice)).append(",\n")
                 }
                 writer.write(stringBuilder.toString())
             }
@@ -34,13 +37,17 @@ class CsvFilePrinter : TickerPrinter {
     override fun createCsvFile(fileName: String) {
         File("data").mkdir()
         this.fileName = "data/$fileName"
-        try {
-            BufferedWriter(OutputStreamWriter(FileOutputStream(this.fileName, true), StandardCharsets.UTF_8)).use {
-                writer ->
-                writer.write("TimeStamp,Exchange,CurrencyPair,Price,Dollar Price,UsdZar,UsdEur\n")
+        val file = File(this.fileName)
+        if (!file.exists()) {
+            println("Created file : $fileName")
+            try {
+                BufferedWriter(OutputStreamWriter(FileOutputStream(this.fileName, true), StandardCharsets.UTF_8)).use {
+                    writer ->
+                    writer.write("TimeStamp,Exchange,CurrencyPair,Price,Dollar Price\n")
+                }
+            } catch (ex: IOException) {
+                println("Create File Error : $ex")
             }
-        } catch (ex: IOException) {
-            // Handle me
         }
     }
 }

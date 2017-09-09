@@ -14,18 +14,25 @@ class FixerExchange : FiatExchange {
     private val retrofit = Retrofit.Builder().baseUrl(requestUrl).addConverterFactory(GsonConverterFactory.create()).build()
     private val fiatApi = retrofit.create(retrofit.RetrofitFinMarketApi::class.java)
 
-    override fun getRates(): Rates? {
+    override fun getRates(): ArrayList<Rates> {
         val call = fiatApi.getFiatTicker()
-        var rates: Rates? = null
+        var rates = arrayListOf<Rates>()
 
         try {
             val response = call.execute()
             if (response.isSuccessful) {
-                rates = response.body().rates
+                rates = extractRates(response.body().rates)
             }
 
         } catch (e: Exception) {
+            println(e.toString())
         }
         return rates
+    }
+
+    private fun extractRates(rates: Map<String, Double>?): ArrayList<Rates> {
+        val list = arrayListOf<Rates>()
+        rates?.forEach { name, value -> list.add(Rates(name, value)) }
+        return list
     }
 }

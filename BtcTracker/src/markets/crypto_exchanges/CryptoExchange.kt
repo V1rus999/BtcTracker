@@ -8,6 +8,6 @@ import tickers.Rates
  */
 interface CryptoExchange {
 
-    fun getTicker(rates : Rates?) : ArrayList<CryptoTicker>
+    fun getTicker(rates: ArrayList<Rates>) : ArrayList<CryptoTicker>
 
 }

@@ -17,7 +17,7 @@ interface RetrofitFinMarketApi {
     @GET("markets/summaries")
     fun getCryptoWatchTicker(): Call<Result>
 
-    @GET("latest?base=USD&symbols=ZAR,EUR")
+    @GET("latest?base=USD")
     fun getFiatTicker(): Call<FiatTicker>
 
 }

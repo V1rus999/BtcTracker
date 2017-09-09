@@ -1,8 +1,10 @@
 import markets.crypto_exchanges.CryptoWatchExchange
-import markets.fiat_exchanges.FixerExchange
 import markets.crypto_exchanges.LunoExchange
+import markets.fiat_exchanges.FixerExchange
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.util.*
+import java.util.Calendar.*
 
 
 /**
@@ -11,11 +13,11 @@ import java.io.InputStreamReader
 fun main(args: Array<String>) {
     println("Starting...")
     val csvPrinter = CsvFilePrinter()
-    val time = System.currentTimeMillis()
+    val cal = Calendar.getInstance()
+    val time = "${cal.get(YEAR)}_${cal.get(MONTH) + 1}_${cal.get(DAY_OF_MONTH)}"
     val filename = "${time}_TickerData.csv"
-    println("Created file : $filename")
     csvPrinter.createCsvFile(filename)
-    val service = TickerStreamingService(FixerExchange(), csvPrinter, CryptoWatchExchange(), LunoExchange())
+    val service = TickerStreamingService(csvPrinter, FixerExchange(), CryptoWatchExchange(), LunoExchange())
     println("Starting streaming service")
     service.startDownloadingTickerData()
 
