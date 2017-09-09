@@ -50,7 +50,7 @@ class LunoExchange : CryptoExchange {
         currencyUsdRate?.let {
             tickers.forEach {
                 try {
-                    val price: Double? = it.price?.toDouble()
+                    val price: Double? = it.price
 
                     if (price != null) {
                         it.usdPrice = (price / currencyUsdRate.value)

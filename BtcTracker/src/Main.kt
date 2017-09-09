@@ -12,16 +12,17 @@ import java.util.Calendar.*
  */
 fun main(args: Array<String>) {
     println("Starting...")
+
     val csvPrinter = CsvFilePrinter()
     val cal = Calendar.getInstance()
     val time = "${cal.get(YEAR)}_${cal.get(MONTH) + 1}_${cal.get(DAY_OF_MONTH)}"
     val filename = "${time}_TickerData.csv"
     csvPrinter.createCsvFile(filename)
+
     val service = TickerStreamingService(csvPrinter, FixerExchange(), CryptoWatchExchange(), LunoExchange())
     println("Starting streaming service")
     service.startDownloadingTickerData()
 
-    println("Press 1 to quit")
     val `in` = BufferedReader(InputStreamReader(System.`in`))
     val a = `in`.readLine()
     if (a == "1") {
